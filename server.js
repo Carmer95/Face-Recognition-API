@@ -11,41 +11,18 @@ const image = require('./controllers/image');
 
 const db = knex({
     client: 'pg',
-    connection: {
+    connection: process.env.DATABASE_URL || {
       host : '127.0.0.1', //localhost
       user : 'postgres', //add your user name for the database here
       port: 5432, // add your port number here
       password : 'P0stgr3s!', //add your correct password in here
       database : 'smart-brain' //add your database name you created here
-    }
+    },
+     ...(process.env.DATABASE_URL ? { ssl: { rejectUnauthorized: false } } : {})
 });
 
 const app = express();
 
-// db.select('*').from('users').then(data => {
-//     console.log(data);
-// });
-
-// const database = {
-//     users: [
-//         {
-//             id: '123',
-//             name: 'John',
-//             email: 'john@gmail.com',
-//             password: 'apples',
-//             entries: 0,
-//             joined: new Date(),
-//         },
-//         {
-//             id: '124',
-//             name: 'Sally',
-//             email: 'sally@gmail.com',
-//             password: 'bananas',
-//             entries: 0,
-//             joined: new Date(),
-//         },
-//     ]
-// }
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -57,12 +34,6 @@ app.get('/profile/:id', profile.handleProfileGet(db))
 app.put('/image', image.handleImage(db))
 app.post('/imageurl', image.handleApiCall);
 
-app.listen(3001, () => {console.log('App is running on Port 3001');});
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {console.log(`App is running on Port ${PORT}`);});
 
-/*
-	/ (root) --> res = this is working
-	/signin --> POST = success/fail
-	/register --> POST = user
-	/profile/:userId --> GET = user
-    /image --> PUT --> user
-*/
