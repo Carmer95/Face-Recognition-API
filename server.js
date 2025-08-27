@@ -25,6 +25,9 @@ const app = express();
 
 
 app.use(cors())
+app.use(cors({
+  origin: 'https://Carmer95.github.io' // or '*' for testing
+}));
 app.use(bodyParser.json());
 
 app.get('/', (_req, res) => res.send('Success'));
