@@ -24,7 +24,6 @@ const db = knex({
 const app = express();
 
 
-app.use(cors())
 app.use(cors({
   origin: 'https://carmer95.github.io' // or '*' for testing
 }));
