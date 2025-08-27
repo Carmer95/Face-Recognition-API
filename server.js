@@ -22,7 +22,9 @@ const db = knex({
 });
 
 const app = express();
-
+db.select('*').from('users').limit(1)
+  .then(data => console.log('DB test success:', data))
+  .catch(err => console.error('DB test failed:', err));
 
 app.use(cors({
   origin: 'https://carmer95.github.io' // or '*' for testing
