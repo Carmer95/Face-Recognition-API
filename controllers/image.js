@@ -19,7 +19,7 @@ const handleApiCall = (req, res) => {
   stub.PostModelOutputs(
     {
       user_app_id: userAppId,
-      model_id: 'a403429f2ddf4b49b307e318f00e528b',
+      model_id: 'face-detection',
       inputs: [{ data: { image: { url: input } } }]
     },
     metadata,
